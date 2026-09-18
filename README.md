@@ -8,7 +8,7 @@ FoodLoop AI shifts institutional kitchens from *reactive* ("waste → collect �
 closed loop: AI demand prediction, CV + IoT quality gates, automatic NGO matching, optimized
 routes, and an auditable impact ledger (meals served, CO₂e avoided).
 
-![Node](https://img.shields.io/badge/Node-20%2B-0b3d2e) ![React](https://img.shields.io/badge/React-19-0b3d2e) ![TypeScript](https://img.shields.io/badge/TS-strict-0b3d2e) ![License](https://img.shields.io/badge/status-prototype-8a5a00)
+[![CI](https://github.com/codewithshubham2706/FoodLoop-AI/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/codewithshubham2706/FoodLoop-AI/actions/workflows/ci.yml) ![Node](https://img.shields.io/badge/Node-20%2B-0b3d2e) ![React](https://img.shields.io/badge/React-19-0b3d2e) ![TypeScript](https://img.shields.io/badge/TS-strict-0b3d2e) ![License](https://img.shields.io/badge/status-prototype-8a5a00)
 
 ## Quick start
 
