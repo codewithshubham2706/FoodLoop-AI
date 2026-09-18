@@ -1,0 +1,11 @@
+# FoodLoop AI — robots
+User-agent: *
+Allow: /
+
+# No crawl-delay needed; host is static & CDN-cached.
+
+Disallow: /admin
+Disallow: /user
+Disallow: /login
+
+Sitemap: https://foodloop.ai/sitemap.xml

@@ -1,0 +1,161 @@
+.user-status-card,
+.user-channel-card,
+.user-checklist-card {
+  padding: 26px;
+  margin-top: 20px;
+}
+
+.user-status-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.user-status-card h2,
+.user-checklist-card h2 {
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-steps {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.user-steps li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink-faint);
+  padding: 11px 14px;
+  border: 1.5px dashed var(--border);
+  border-radius: 12px;
+}
+
+.user-steps li.done {
+  color: var(--accent-strong);
+  border-style: solid;
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.user-steps li.failed {
+  color: var(--danger);
+  border-color: var(--danger);
+  background: #fde8e6;
+}
+
+.user-approved-box {
+  margin-top: 18px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.user-approved-box > p {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.user-approved-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.user-wait-note {
+  margin-top: 16px;
+  font-size: 13.5px;
+  color: var(--ink-faint);
+  border-top: 1px dashed var(--border);
+  padding-top: 14px;
+}
+
+/* Channel card */
+.user-channel-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.user-channel-icon {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  color: var(--brand-800);
+}
+
+.user-channel-body {
+  flex: 1;
+  min-width: 220px;
+}
+
+.user-channel-body h2 {
+  font-size: 16px;
+}
+
+.user-channel-body p {
+  margin-top: 4px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+/* Checklist */
+.user-checklist {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.user-checklist li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  padding: 11px 14px;
+  background: var(--surface-alt);
+  border-radius: 10px;
+}
+
+.user-checklist li.done {
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
+.user-checklist li .admin-status {
+  margin-left: auto;
+}
+
+.user-todo-dot {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  flex: none;
+}
+
+@media (max-width: 560px) {
+  .user-approved-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

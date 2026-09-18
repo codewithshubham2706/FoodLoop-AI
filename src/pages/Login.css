@@ -1,0 +1,326 @@
+/* Google/Gmail-style sign-in for the FoodLoop AI demo.
+   Layout, floating labels and button treatment follow Google account
+   chooser conventions; colours stay on the FoodLoop token palette. */
+
+.g-page {
+  min-height: calc(100vh - 66px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 44px 16px 40px;
+  background: var(--surface-alt);
+}
+
+.g-card {
+  width: min(448px, 100%);
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow: 0 4px 24px rgba(11, 61, 46, 0.1);
+  padding: 40px 40px 34px;
+}
+
+.g-title {
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--ink);
+  margin-top: 18px;
+}
+
+.g-sub {
+  margin-top: 10px;
+  font-size: 15px;
+  color: var(--ink-soft);
+}
+
+.g-sub strong {
+  color: var(--ink);
+}
+
+.g-signedin {
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+  border-radius: 10px;
+  padding: 9px 13px;
+}
+
+/* Account chooser */
+.g-accounts {
+  margin-top: 26px;
+  display: grid;
+  gap: 6px;
+}
+
+.g-account {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  background: none;
+  border: none;
+  border-radius: 14px;
+  padding: 12px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.g-account:hover {
+  background: var(--surface-alt);
+}
+
+.g-avatar {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--brand-600);
+}
+
+.g-avatar.is-admin {
+  background: var(--brand-800);
+}
+
+.g-avatar-empty {
+  border: 1.5px dashed var(--border);
+  color: var(--ink-faint);
+  background: #fff;
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.g-account-body {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.g-account-body strong {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.g-account-body small {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.g-account-body em {
+  font-style: normal;
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+
+/* Password step — floating labels */
+.g-form {
+  margin-top: 26px;
+  display: grid;
+  gap: 6px;
+}
+
+.g-error {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--danger);
+  background: #fde8e6;
+  border-radius: 10px;
+  padding: 10px 13px;
+  margin-bottom: 6px;
+}
+
+.g-field {
+  position: relative;
+  margin-top: 10px;
+}
+
+.g-field input {
+  width: 100%;
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--ink);
+  padding: 15px 15px 15px 15px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.g-field input:focus {
+  border-color: var(--brand-600);
+  box-shadow: 0 0 0 1px var(--brand-600);
+}
+
+/* Floating label sits over the border, like Google's material field */
+.g-field label {
+  position: absolute;
+  left: 12px;
+  top: 16px;
+  font-size: 15px;
+  color: var(--ink-faint);
+  background: #fff;
+  padding: 0 5px;
+  pointer-events: none;
+  transition: all 0.14s ease;
+}
+
+.g-field input:focus + label,
+.g-field input:not(:placeholder-shown) + label {
+  top: -9px;
+  font-size: 12.5px;
+  color: var(--brand-600);
+  font-weight: 600;
+}
+
+.g-field-pw input {
+  padding-right: 46px;
+}
+
+.g-pw-toggle {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 7px;
+  color: var(--ink-faint);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+}
+
+.g-pw-toggle:hover {
+  color: var(--ink);
+  background: var(--surface-alt);
+}
+
+.g-hint {
+  margin-top: 10px;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+}
+
+.g-forgot {
+  margin-top: 2px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brand-600);
+}
+
+/* Actions */
+.g-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 26px;
+}
+
+.g-btn-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--brand-600);
+  background: none;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.g-btn-text:hover {
+  background: var(--surface-alt);
+}
+
+.g-btn-next {
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--brand-600);
+  border: none;
+  border-radius: 999px;
+  padding: 11px 26px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.g-btn-next:hover {
+  background: var(--brand-800);
+  box-shadow: 0 4px 14px rgba(11, 61, 46, 0.25);
+}
+
+.g-btn-next:disabled {
+  opacity: 0.75;
+  cursor: wait;
+}
+
+.g-spin {
+  animation: wl-spin 0.9s linear infinite;
+}
+
+/* Footer */
+.g-footer {
+  width: min(448px, 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+}
+
+.g-footer nav {
+  display: flex;
+  gap: 18px;
+}
+
+.g-footer a {
+  color: var(--ink-faint);
+  text-decoration: none;
+}
+
+.g-footer a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.g-demo-note {
+  font-size: 12px;
+  color: var(--ink-faint);
+  text-align: center;
+  max-width: 448px;
+}
+
+@media (max-width: 520px) {
+  .g-card {
+    padding: 28px 22px 26px;
+    border-radius: 20px;
+  }
+  .g-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .g-btn-next,
+  .g-btn-text {
+    justify-content: center;
+  }
+}

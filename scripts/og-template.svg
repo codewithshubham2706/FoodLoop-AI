@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B3D2E"/>
+      <stop offset="0.65" stop-color="#0E4A37"/>
+      <stop offset="1" stop-color="#123f2f"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#34D399"/>
+      <stop offset="1" stop-color="#A7F3D0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- soft glow orb -->
+  <circle cx="1020" cy="120" r="260" fill="#34D399" opacity="0.08"/>
+  <circle cx="90" cy="560" r="220" fill="#34D399" opacity="0.06"/>
+
+  <!-- loop glyph -->
+  <g transform="translate(72,86)">
+    <rect width="88" height="88" rx="22" fill="#0f4f3b" stroke="#34D399" stroke-opacity="0.35"/>
+    <path d="M62 35a20 20 0 1 0 3 16" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/>
+    <path d="M65 21v14h-14" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M43 55c0-9 6.5-15.5 15.5-15.5C58.5 48.5 52 55 43 55z" fill="#34D399"/>
+  </g>
+
+  <!-- wordmark -->
+  <text x="188" y="146" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="52" font-weight="800" fill="#FFFFFF">FoodLoop <tspan fill="#34D399">AI</tspan></text>
+
+  <!-- headline -->
+  <text x="72" y="300" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="72" font-weight="800" fill="#FFFFFF" letter-spacing="-1">Waste less. Feed more.</text>
+
+  <!-- subline -->
+  <text x="74" y="368" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="30" fill="#D3E7DD">Predict demand · Check quality · Match NGOs · Optimize routes</text>
+
+  <!-- pipeline chips -->
+  <g font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="24" font-weight="700">
+    <rect x="72" y="440" width="192" height="60" rx="30" fill="#123f2f" stroke="#34D399" stroke-opacity="0.45"/>
+    <text x="168" y="478" text-anchor="middle" fill="#FFFFFF">DEMAND AI</text>
+
+    <rect x="284" y="440" width="192" height="60" rx="30" fill="#123f2f" stroke="#34D399" stroke-opacity="0.45"/>
+    <text x="380" y="478" text-anchor="middle" fill="#FFFFFF">QUALITY AI</text>
+
+    <rect x="496" y="440" width="212" height="60" rx="30" fill="#123f2f" stroke="#34D399" stroke-opacity="0.45"/>
+    <text x="602" y="478" text-anchor="middle" fill="#FFFFFF">MATCHING AI</text>
+
+    <rect x="728" y="440" width="172" height="60" rx="30" fill="#123f2f" stroke="#34D399" stroke-opacity="0.45"/>
+    <text x="814" y="478" text-anchor="middle" fill="#FFFFFF">ROUTE AI</text>
+
+    <rect x="920" y="440" width="208" height="60" rx="30" fill="#34D399"/>
+    <text x="1024" y="478" text-anchor="middle" fill="#0B3D2E">IMPACT</text>
+  </g>
+
+  <!-- footer strip -->
+  <text x="72" y="580" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="24" fill="#9DBFAF">foodloop.ai · Predict · Prevent · Redistribute · Measure</text>
+</svg>

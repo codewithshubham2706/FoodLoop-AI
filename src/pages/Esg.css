@@ -1,0 +1,84 @@
+.esg-trend {
+  padding: 26px;
+  margin-top: 22px;
+}
+
+.esg-trend h2 {
+  font-size: 17px;
+}
+
+.esg-trend-sub {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+.esg-chart {
+  width: 100%;
+  height: auto;
+  margin-top: 18px;
+}
+
+.esg-chart .gridline {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.esg-chart .trend-line {
+  fill: none;
+  stroke: var(--brand-600);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.esg-weeks {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-top: 6px;
+}
+
+.esg-weeks span {
+  text-align: center;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--ink-faint);
+}
+
+.esg-frameworks {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.esg-frameworks .card {
+  padding: 24px;
+  display: grid;
+  gap: 10px;
+}
+
+.esg-frameworks h3 {
+  font-size: 15.5px;
+}
+
+.esg-frameworks p {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.kpi-delta.down {
+  color: var(--ok); /* landfill going down is good */
+}
+
+@media (max-width: 900px) {
+  .esg-frameworks {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .esg-frameworks {
+    grid-template-columns: 1fr;
+  }
+}

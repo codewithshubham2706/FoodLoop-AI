@@ -1,0 +1,165 @@
+.waitlist-form {
+  display: grid;
+  gap: 16px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.field input,
+.field select {
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  width: 100%;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--brand-500);
+  box-shadow: 0 0 0 3px rgba(27, 122, 92, 0.15);
+}
+
+.field input[aria-invalid='true'],
+.field select[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+
+.field-error {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--danger);
+}
+
+/* WhatsApp opt-in */
+.wa-optin {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--surface-alt);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.wa-optin:hover {
+  border-color: var(--brand-500);
+}
+
+.wa-optin:has(input:focus-visible) {
+  outline: 3px solid var(--brand-500);
+  outline-offset: 2px;
+}
+
+.wa-optin input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.wa-optin-box {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  border: 1.5px solid var(--border);
+  color: var(--ink-faint);
+  transition: all 0.18s ease;
+}
+
+.wa-optin input:checked + .wa-optin-box {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.wa-optin-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.wa-optin-text strong {
+  color: var(--ink);
+}
+
+/* Honeypot: remove from layout, view and a11y tree */
+.hp-field {
+  position: absolute !important;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.wl-submit {
+  justify-self: start;
+}
+
+.wl-submit:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.wl-feedback {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.wl-feedback.success {
+  color: var(--ok);
+}
+
+.wl-feedback.error {
+  color: var(--danger);
+}
+
+.spin {
+  animation: wl-spin 0.9s linear infinite;
+}
+
+@keyframes wl-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 620px) {
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+  .wl-submit {
+    justify-self: stretch;
+  }
+}
