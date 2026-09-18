@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { ConsentProvider } from './lib/consent'
 import AuthProvider from './lib/auth'
 import RequireRole from './components/RequireRole'
@@ -15,42 +15,42 @@ import UserPanel from './pages/UserPanel'
 import Admin from './pages/Admin'
 import NotFound from './pages/NotFound'
 
+// NOTE: the single <BrowserRouter> lives in components/RouterBase.tsx (it
+// owns the deploy basename). App renders routes only.
 export default function App() {
   return (
     <ConsentProvider>
       <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route element={<Layout />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/trace" element={<Trace />} />
-              <Route path="/rewards" element={<Rewards />} />
-              <Route path="/esg" element={<Esg />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/terms" element={<Terms />} />
-              <Route path="/login" element={<Login />} />
-              {/* Role-based panels */}
-              <Route
-                path="/user"
-                element={
-                  <RequireRole role="user">
-                    <UserPanel />
-                  </RequireRole>
-                }
-              />
-              <Route
-                path="/admin"
-                element={
-                  <RequireRole role="admin">
-                    <Admin />
-                  </RequireRole>
-                }
-              />
-              <Route path="*" element={<NotFound />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/trace" element={<Trace />} />
+            <Route path="/rewards" element={<Rewards />} />
+            <Route path="/esg" element={<Esg />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/login" element={<Login />} />
+            {/* Role-based panels */}
+            <Route
+              path="/user"
+              element={
+                <RequireRole role="user">
+                  <UserPanel />
+                </RequireRole>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <RequireRole role="admin">
+                  <Admin />
+                </RequireRole>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
       </AuthProvider>
     </ConsentProvider>
   )

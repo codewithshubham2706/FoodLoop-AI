@@ -3,10 +3,10 @@ import { BrowserRouter } from 'react-router-dom'
 import { BASE_PATH } from '../lib/env'
 
 /**
- * On GitHub Pages the app lives under /FoodLoop-AI — give the router its
- * basename here. App's own <BrowserRouter> is skipped when BASE_PATH is set,
- * so local dev keeps base '' and behavior is unchanged.
+ * Single router for the whole app. On GitHub Pages the app lives under
+ * /FoodLoop-AI — that becomes the router's basename; local dev keeps the
+ * default '/'. Must wrap the app exactly once (App renders routes only).
  */
 export default function RouterBase({ children }: { children: ReactNode }) {
-  return BASE_PATH ? <BrowserRouter basename={BASE_PATH}>{children}</BrowserRouter> : <>{children}</>
+  return <BrowserRouter basename={BASE_PATH || undefined}>{children}</BrowserRouter>
 }
