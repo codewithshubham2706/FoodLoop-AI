@@ -7,5 +7,7 @@ Allow: /
 Disallow: /FoodLoop-AI/admin
 Disallow: /FoodLoop-AI/user
 Disallow: /FoodLoop-AI/login
+Disallow: /FoodLoop-AI/register
+Disallow: /FoodLoop-AI/staff-console
 
 Sitemap: https://codewithshubham2706.github.io/FoodLoop-AI/sitemap.xml

@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
-import { useNavigate, useLocation, Link } from 'react-router-dom'
-import { ArrowLeft, Eye, EyeOff, Loader2 } from 'lucide-react'
-import { useAuth, DEMO_ACCOUNTS, type DemoUser, type Role } from '../lib/auth-context'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { ArrowLeft, Eye, EyeOff, Loader2, ChefHat, HeartHandshake, Store, ShieldCheck } from 'lucide-react'
+import { DEMO_ACCOUNTS, useAuth } from '../lib/auth-context'
+import type { SessionUser } from '../lib/auth-context'
+import { MEMBER_PANEL, STAFF_CONSOLE, isStaffRole, type Role } from '../lib/roles'
 import { useSeo } from '../lib/seo'
 import Reveal from '../components/Reveal'
 import './Login.css'
@@ -31,11 +33,21 @@ function GLogo({ size = 40 }: { size?: number }) {
   )
 }
 
-const ACCOUNTS: Array<DemoUser & { hint: string }> = [
-  { ...DEMO_ACCOUNTS.user, hint: 'Pilot member — user panel' },
-  { ...DEMO_ACCOUNTS.admin, hint: 'FoodLoop staff — admin panel' },
-]
+const ROLE_ICON: Record<Role, typeof ChefHat> = {
+  staff: ShieldCheck,
+  mess: ChefHat,
+  ngo: HeartHandshake,
+  vendor: Store,
+}
 
+const HINTS: Record<Role, string> = {
+  staff: 'FoodLoop operator — staff console',
+  mess: 'Institutional mess — member panel',
+  ngo: 'NGO partner — member panel',
+  vendor: 'Vendor / caterer — member panel',
+}
+
+const ACCOUNTS: SessionUser[] = [DEMO_ACCOUNTS.mess, DEMO_ACCOUNTS.ngo, DEMO_ACCOUNTS.vendor, DEMO_ACCOUNTS.staff]
 const ACCOUNT_BY_EMAIL = new Map(ACCOUNTS.map((a) => [a.email.toLowerCase(), a]))
 
 function initial(name: string): string {
@@ -49,7 +61,7 @@ export default function Login() {
   const from = (location.state as { from?: string } | null)?.from
 
   const [step, setStep] = useState<'choose' | 'password'>('choose')
-  const [selected, setSelected] = useState<DemoUser | null>(null)
+  const [selected, setSelected] = useState<SessionUser | null>(null)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPw, setShowPw] = useState(false)
@@ -61,30 +73,29 @@ export default function Login() {
 
   useSeo({
     title: 'Sign in',
-    description: 'Sign in to FoodLoop AI to open your user panel or the admin approval console.',
+    description: 'Sign in to FoodLoop AI — member panel for messes and NGOs, staff console for FoodLoop operators.',
     path: '/login',
     index: false,
   })
 
-  // Move focus when the step changes.
   useEffect(() => {
     if (step === 'password') pwRef.current?.focus()
   }, [step])
 
-  function panelFor(role: Role): string {
-    return from ?? (role === 'admin' ? '/admin' : '/user')
+  function panelFor(account: SessionUser): string {
+    return from ?? (isStaffRole(account.role) ? STAFF_CONSOLE : MEMBER_PANEL)
   }
 
-  function finish(account: DemoUser) {
+  function finish(account: SessionUser) {
     setBusy(true)
     // Simulated network latency, like a real OAuth round-trip.
     window.setTimeout(() => {
       signIn(account.role)
-      navigate(panelFor(account.role), { replace: true })
+      navigate(panelFor(account), { replace: true })
     }, 650)
   }
 
-  function choose(account: DemoUser) {
+  function choose(account: SessionUser) {
     setSelected(account)
     setError('')
     setStep('password')
@@ -102,14 +113,15 @@ export default function Login() {
     e.preventDefault()
     if (busy) return
 
-    if (!selected) {
-      // "Use another account" — match the typed email to a demo account.
+    let account = selected
+    if (!account) {
       const match = ACCOUNT_BY_EMAIL.get(email.trim().toLowerCase())
       if (!match) {
         setError("Couldn't find that account. Use one of the demo accounts listed.")
         emailRef.current?.focus()
         return
       }
+      account = match
       setSelected(match)
     }
 
@@ -119,11 +131,11 @@ export default function Login() {
       return
     }
     setError('')
-    finish(selected ?? ACCOUNT_BY_EMAIL.get(email.trim().toLowerCase())!)
+    finish(account)
   }
 
-  // Already signed in? Offer a quick hop to the matching panel.
-  const signedInPanel = user?.role === 'admin' ? '/admin' : user ? '/user' : null
+  // Already signed in? Offer a quick hop to the matching console.
+  const signedInPanel = user ? (isStaffRole(user.role) ? STAFF_CONSOLE : MEMBER_PANEL) : null
 
   return (
     <div className="g-page">
@@ -139,11 +151,11 @@ export default function Login() {
             </>
           ) : selected ? (
             <>
-              {selected.name} · {selected.email}
+              {selected.name} · {selected.org}
             </>
           ) : (
             <>
-              with your demo account to continue to <strong>FoodLoop AI</strong>
+              with your account to continue to <strong>FoodLoop AI</strong>
             </>
           )}
         </p>
@@ -156,18 +168,21 @@ export default function Login() {
 
         {step === 'choose' && (
           <div className="g-accounts">
-            {ACCOUNTS.map((a) => (
-              <button key={a.email} type="button" className="g-account" onClick={() => choose(a)}>
-                <span className={`g-avatar${a.role === 'admin' ? ' is-admin' : ''}`} aria-hidden>
-                  {initial(a.name)}
-                </span>
-                <span className="g-account-body">
-                  <strong>{a.name}</strong>
-                  <small>{a.email}</small>
-                  <em>{a.hint}</em>
-                </span>
-              </button>
-            ))}
+            {ACCOUNTS.map((a) => {
+              const Icon = ROLE_ICON[a.role]
+              return (
+                <button key={a.email} type="button" className="g-account" onClick={() => choose(a)}>
+                  <span className={`g-avatar${isStaffRole(a.role) ? ' is-admin' : ''}`} aria-hidden>
+                    {isStaffRole(a.role) ? <Icon size={19} /> : initial(a.name)}
+                  </span>
+                  <span className="g-account-body">
+                    <strong>{a.name}</strong>
+                    <small>{a.email}</small>
+                    <em>{HINTS[a.role]}</em>
+                  </span>
+                </button>
+              )
+            })}
             <button type="button" className="g-account" onClick={useAnother}>
               <span className="g-avatar g-avatar-empty" aria-hidden>
                 +
@@ -224,7 +239,6 @@ export default function Login() {
               </button>
             </div>
             <p className="g-hint">Demo build — any password with 4+ characters works.</p>
-            <p className="g-forgot">Forgot password? (demo)</p>
 
             <div className="g-actions">
               <button type="button" className="g-btn-text" onClick={() => setStep('choose')}>
@@ -236,6 +250,13 @@ export default function Login() {
             </div>
           </form>
         )}
+
+        <div className="g-register-cta">
+          <p>
+            New mess, NGO or vendor? <Link to="/register">Register your organisation</Link> — staff
+            review it, then your approval email with the WhatsApp invite arrives.
+          </p>
+        </div>
       </Reveal>
 
       <footer className="g-footer">
@@ -244,9 +265,7 @@ export default function Login() {
           <a href="#help" onClick={(e) => e.preventDefault()}>
             Help
           </a>
-          <a href="#privacy" onClick={(e) => e.preventDefault()}>
-            Privacy
-          </a>
+          <Link to="/privacy">Privacy</Link>
           <Link to="/terms">Terms</Link>
         </nav>
       </footer>

@@ -67,9 +67,51 @@ const PAIRS = [
   ['accent step icon (UI component)', '#A7F3D0', '#0B3D2E', AA_LARGE],
 ]
 
+// Dark theme (default) — mirrors the :root token block in src/index.css
+const DARK_PAIRS = [
+  ['body ink on surface', '#E8F2EC', '#14231C', AA_NORMAL],
+  ['soft ink on surface', '#B9CEC4', '#14231C', AA_NORMAL],
+  ['faint ink on surface', '#93ACA0', '#14231C', AA_NORMAL],
+  ['soft ink on surface-alt', '#B9CEC4', '#0F1A15', AA_NORMAL],
+  ['faint ink on surface-alt', '#93ACA0', '#0F1A15', AA_NORMAL],
+  ['accent link on surface', '#34D399', '#14231C', AA_NORMAL],
+  ['accent-strong on surface', '#6EE7B7', '#14231C', AA_NORMAL],
+  ['brand-800 heading on surface', '#9BEEC9', '#14231C', AA_NORMAL],
+  ['brand-700 tag on surface-alt', '#7CE0B8', '#0F1A15', AA_NORMAL],
+  ['accent-strong badge on accent-soft', '#6EE7B7', '#123A2E', AA_NORMAL],
+  ['brand-800 icon on accent-soft', '#9BEEC9', '#123A2E', AA_NORMAL],
+  ['danger on surface', '#F87171', '#14231C', AA_NORMAL],
+  ['warn on surface', '#FBBF24', '#14231C', AA_NORMAL],
+  ['ok on surface', '#4ADE80', '#14231C', AA_NORMAL],
+  ['warn on warn-bg', '#FBBF24', '#3A2A08', AA_NORMAL],
+  ['danger on danger-bg', '#F87171', '#3B1410', AA_NORMAL],
+  ['primary-button ink on accent', '#06281E', '#34D399', AA_NORMAL],
+  ['ink on brand-deep tile', '#E8F2EC', '#102B22', AA_NORMAL],
+  ['on-dark-soft on brand-deep', '#D3E7DD', '#102B22', AA_NORMAL],
+  ['on-dark-faint on brand-deep', '#9DBFAF', '#102B22', AA_NORMAL],
+  ['mint accent on brand-deep', '#A7F3D0', '#102B22', AA_NORMAL],
+  ['ink on brand-900 (footer/hero)', '#E8F2EC', '#0A1F19', AA_NORMAL],
+  ['on-dark-soft on brand-900', '#D3E7DD', '#0A1F19', AA_NORMAL],
+  ['on-dark-faint on brand-900', '#9DBFAF', '#0A1F19', AA_NORMAL],
+  ['mint on brand-900', '#A7F3D0', '#0A1F19', AA_NORMAL],
+  ['faint on accent-soft (nav hover)', '#93ACA0', '#123A2E', AA_NORMAL],
+]
+
 let failed = false
 console.log('WCAG 2.1 AA contrast audit — FoodLoop AI tokens\n')
+
+console.log('— Light theme —\n')
 for (const [desc, fg, bg, min] of PAIRS) {
+  const r = ratio(fg, bg)
+  const ok = r >= min
+  if (!ok) failed = true
+  console.log(
+    `${ok ? '✓' : '✗'} ${r.toFixed(2).padStart(5)} : 1  (min ${min})  ${desc}  ${fg} on ${bg}`,
+  )
+}
+
+console.log('\n— Dark theme (default) —\n')
+for (const [desc, fg, bg, min] of DARK_PAIRS) {
   const r = ratio(fg, bg)
   const ok = r >= min
   if (!ok) failed = true

@@ -4,6 +4,10 @@ import './index.css'
 import App from './App'
 import RouterBase from './components/RouterBase'
 import { BASE_PATH } from './lib/env'
+import { initTheme } from './lib/theme'
+
+// Dark-first theme: applies data-theme on <html> before first paint.
+initTheme()
 
 // Gate all entrance animations behind a JS-detection class (see the Motion
 // section of index.css): without JavaScript, content is never hidden.

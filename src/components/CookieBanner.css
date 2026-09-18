@@ -4,7 +4,7 @@
   bottom: 18px;
   transform: translateX(-50%);
   width: min(920px, calc(100vw - 28px));
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 18px;
   box-shadow: 0 18px 60px rgba(8, 43, 33, 0.22);

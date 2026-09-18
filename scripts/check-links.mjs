@@ -15,9 +15,9 @@ import { fileURLToPath } from 'node:url'
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const srcDir = path.join(root, 'src')
 
-const ROUTES = ['/', '/dashboard', '/trace', '/rewards', '/esg', '/privacy', '/terms', '/login', '/user', '/admin']
+const ROUTES = ['/', '/dashboard', '/trace', '/rewards', '/esg', '/privacy', '/terms', '/login', '/register', '/user', '/staff-console']
 // Private / noindex panels: valid routes but deliberately absent from sitemap.xml
-const PRIVATE_ROUTES = new Set(['/login', '/user', '/admin'])
+const PRIVATE_ROUTES = new Set(['/login', '/register', '/user', '/staff-console'])
 // Deploy origin for sitemap/robots checks (keep in sync with scripts/site-url.mjs).
 const SITE_URL = 'https://codewithshubham2706.github.io'
 const BASE_PATH = '/FoodLoop-AI'

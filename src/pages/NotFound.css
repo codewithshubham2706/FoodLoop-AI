@@ -14,7 +14,7 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: radial-gradient(circle at 32% 30%, #ffffff, var(--surface-alt) 70%);
+  background: radial-gradient(circle at 32% 30%, var(--surface), var(--surface-alt) 70%);
   border: 1.5px solid var(--border);
   box-shadow: var(--shadow-card);
   color: var(--brand-700);

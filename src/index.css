@@ -5,21 +5,74 @@
    ─────────────────────────────────────────────────────────────── */
 
 :root {
-  /* Brand palette */
+  /* Brand palette (dark theme is the default) */
+  --brand-900: #0a1f19;
+  --brand-800: #9beec9; /* headings / primary ink on dark surfaces */
+  --brand-700: #7ce0b8;
+  --brand-600: #4ade9c;
+  --brand-500: #34d399;
+  --brand-deep: #102b22; /* dark-green surface for tiles, chips, hero */
+
+  /* Accents */
+  --accent: #34d399;
+  --accent-strong: #6ee7b7;
+  --accent-soft: #123a2e;
+  --amber-accent: #fbbf24;
+  --sky-accent: #38bdf8;
+
+  /* Neutral ink on dark surfaces */
+  --ink: #e8f2ec;
+  --ink-soft: #b9cec4;
+  --ink-faint: #93aca0;
+  --surface: #14231c;
+  --surface-alt: #0f1a15;
+  --border: #244136;
+
+  /* Ink on brand-deep / brand-900 surfaces (same in both themes) */
+  --on-dark: #ffffff;
+  --on-dark-soft: #d3e7dd;
+  --on-dark-faint: #9dbfaf;
+
+  --ok: #4ade80;
+  --warn: #fbbf24;
+  --danger: #f87171;
+  --warn-bg: #3a2a08;
+  --danger-bg: #3b1410;
+
+  /* Buttons: bright mint fill carries dark ink in the dark theme */
+  --btn-primary-ink: #06281e;
+
+  /* Chrome */
+  --header-bg: rgba(10, 20, 16, 0.85);
+  --focus: #34d399;
+
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+
+  --shadow-card: 0 10px 40px rgba(0, 0, 0, 0.35);
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  color-scheme: dark;
+}
+
+/* Light theme — opted in via the header toggle (html[data-theme='light']).
+   Contrast: every pair below passes WCAG 2.1 AA (scripts/contrast-check.mjs
+   audits BOTH palettes). */
+html[data-theme='light'] {
   --brand-900: #082b21;
   --brand-800: #0b3d2e;
   --brand-700: #0f4f3b;
   --brand-600: #12634a;
   --brand-500: #1b7a5c;
+  --brand-deep: #0b3d2e;
 
-  /* Accents — used on light backgrounds at ≥AA, or decoratively */
   --accent: #0b7a4f;
   --accent-strong: #08623e;
   --accent-soft: #d7f2e4;
   --amber-accent: #8a5a00;
   --sky-accent: #075985;
 
-  /* Neutral ink on light surfaces */
   --ink: #14231c;
   --ink-soft: #3c5247;
   --ink-faint: #4a6155;
@@ -27,21 +80,20 @@
   --surface-alt: #f2f6f3;
   --border: #dbe5df;
 
-  /* Ink on dark surfaces */
-  --on-dark: #ffffff;
-  --on-dark-soft: #d3e7dd;
-  --on-dark-faint: #9dbfaf;
-
   --ok: #0b7a4f;
   --warn: #8a5a00;
   --danger: #b42318;
+  --warn-bg: #fdf1dc;
+  --danger-bg: #fde8e6;
 
-  --radius-lg: 20px;
-  --radius-md: 14px;
-  --radius-sm: 10px;
+  --btn-primary-ink: #ffffff;
+
+  --header-bg: rgba(255, 255, 255, 0.92);
+  --focus: #1b7a5c;
 
   --shadow-card: 0 10px 40px rgba(11, 61, 46, 0.08);
-  --font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  color-scheme: light;
 }
 
 * {
@@ -79,7 +131,7 @@ p {
 
 a {
   color: var(--accent);
-  text-decoration-color: rgba(11, 122, 79, 0.4);
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
   text-underline-offset: 3px;
 }
 
@@ -93,9 +145,18 @@ button {
 }
 
 :focus-visible {
-  outline: 3px solid var(--brand-500);
+  outline: 3px solid var(--focus);
   outline-offset: 2px;
   border-radius: 4px;
+}
+
+/* Smooth cross-fade when the theme toggles (respects reduced motion via the
+   global override at the bottom of this file) */
+body,
+.site-header,
+.card,
+.mobile-nav {
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
 .container {
@@ -144,13 +205,13 @@ button {
 
 .btn-ghost {
   background: transparent;
-  color: var(--brand-800);
+  color: var(--ink);
   border: 1.5px solid var(--border);
 }
 
 .btn-ghost:hover {
   border-color: var(--brand-500);
-  background: rgba(11, 61, 46, 0.04);
+  background: var(--accent-soft);
 }
 
 .btn-on-dark {
@@ -241,8 +302,8 @@ button {
 }
 
 .pipe-step.is-accent {
-  background: var(--brand-800);
-  border-color: var(--brand-800);
+  background: var(--brand-deep);
+  border-color: var(--brand-deep);
 }
 
 .pipe-step.is-accent .pipe-icon {
@@ -460,4 +521,32 @@ html.js .hero-panel .panel-spark {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ── Always-dark sections (hero, impact band, footer) ────────────
+   These blocks keep their dark-green gradient in BOTH themes, so their
+   inner ink/buttons must not follow the theme flip. */
+.impact-band {
+  background: linear-gradient(150deg, var(--brand-900) 0%, #0b3d2e 60%, #0f4f3b 100%);
+}
+
+.hero .btn-ghost {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.hero .btn-ghost:hover {
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.eyebrow-dark {
+  background: rgba(255, 255, 255, 0.12);
+  color: #a7f3d0;
+}
+
+.hero .eyebrow {
+  background: rgba(255, 255, 255, 0.92);
+  color: #0b3d2e;
 }

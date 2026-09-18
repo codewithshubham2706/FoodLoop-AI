@@ -28,7 +28,7 @@
   padding: 12px 14px;
   border: 1.5px solid var(--border);
   border-radius: 12px;
-  background: #fff;
+  background: var(--surface);
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
   width: 100%;
 }
@@ -89,7 +89,7 @@
   border-radius: 9px;
   display: grid;
   place-items: center;
-  background: #fff;
+  background: var(--surface);
   border: 1.5px solid var(--border);
   color: var(--ink-faint);
   transition: all 0.18s ease;
@@ -98,7 +98,7 @@
 .wa-optin input:checked + .wa-optin-box {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: var(--btn-primary-ink);
 }
 
 .wa-optin-text {

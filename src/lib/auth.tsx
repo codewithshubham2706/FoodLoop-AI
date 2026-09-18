@@ -1,13 +1,13 @@
 import { useState, type ReactNode } from 'react'
-import { AuthContext, DEMO_ACCOUNTS, readSession, writeSession, type DemoUser, type Role } from './auth-context'
+import { AuthContext, DEMO_ACCOUNTS, readSession, writeSession, type SessionUser, type Role } from './auth-context'
 
 /**
  * Session provider for the demo sign-in. Session lives in sessionStorage so
  * each browser tab can hold its own panel session (handy for comparing the
- * user and admin panels side by side).
+ * member and staff consoles side by side).
  */
 export default function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<DemoUser | null>(() => readSession())
+  const [user, setUser] = useState<SessionUser | null>(() => readSession())
 
   const value = {
     user,

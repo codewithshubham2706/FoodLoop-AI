@@ -167,85 +167,11 @@ export function traceFor(batchId: string): TraceEvent[] {
   return TRACE[batchId] ?? []
 }
 
-/* ── Waitlist → admin approval → WhatsApp channel email ──────────
-   Flow: user registers (with optional WhatsApp opt-in) → admin approves
-   in the /admin console → ONE transactional email is sent to their
-   address containing the WhatsApp channel invite; broadcast updates
-   (surplus alerts, pilot news, impact digests) arrive on that channel.
-   Mirrors the contracts in docs/05-backend-schema.md §3.6–3.7. */
-
-export type WaitlistStatus = 'pending' | 'approved' | 'rejected'
-
-export interface WaitlistEntry {
-  id: string
-  name: string
-  email: string
-  org: string
-  role: string
-  whatsapp_opt_in: boolean
-  whatsapp_phone?: string
-  status: WaitlistStatus
-  created_at: string
-  approved_at?: string
-}
-
-export const DEFAULT_WAITLIST_ENTRY: WaitlistEntry = {
-  id: 'WL-0187',
-  name: 'Aarav Sharma',
-  email: 'aarav@campus.edu',
-  org: 'Campus Mess 02',
-  role: 'Institutional kitchen / mess',
-  whatsapp_opt_in: true,
-  whatsapp_phone: '+91 98••• ••042',
-  status: 'pending',
-  created_at: '2026-09-17 09:12',
-}
-
-export const WAITLIST_DEMO: WaitlistEntry[] = [
-  DEFAULT_WAITLIST_ENTRY,
-  {
-    id: 'WL-0186',
-    name: 'Meera Nair',
-    email: 'meera@annapurnaseva.org',
-    org: 'Annapurna Seva Trust',
-    role: 'NGO / community kitchen',
-    whatsapp_opt_in: true,
-    status: 'pending',
-    created_at: '2026-09-16 18:40',
-  },
-  {
-    id: 'WL-0185',
-    name: 'Karan Malhotra',
-    email: 'karan@freshplate.in',
-    org: 'FreshPlate Cloud Kitchen',
-    role: 'Institutional kitchen / mess',
-    whatsapp_opt_in: false,
-    status: 'pending',
-    created_at: '2026-09-16 14:03',
-  },
-  {
-    id: 'WL-0183',
-    name: 'Rohit Verma',
-    email: 'rohit@coldlink.in',
-    org: 'ColdLink Logistics',
-    role: 'Cold-chain / logistics partner',
-    whatsapp_opt_in: false,
-    status: 'approved',
-    created_at: '2026-09-15 11:05',
-    approved_at: '2026-09-15 16:20',
-  },
-  {
-    id: 'WL-0181',
-    name: 'Priya Das',
-    email: 'priya@citymunicipal.gov.in',
-    org: 'City Municipal Body',
-    role: 'Government / municipal body',
-    whatsapp_opt_in: true,
-    whatsapp_phone: '+91 81••• ••220',
-    status: 'rejected',
-    created_at: '2026-09-14 15:22',
-  },
-]
+/* ── Approval → WhatsApp channel email ───────────────────────────
+   Flow: an org registers with full details at /register → FoodLoop staff
+   approve/reject in the staff console (backend, not this public app) →
+   ONE transactional email with the WhatsApp channel invite is sent.
+   See docs/05-backend-schema.md §3.6–3.7 and src/lib/registrations.ts. */
 
 /** The single approval email: contains the WhatsApp channel invite. */
 export const APPROVAL_EMAIL = {

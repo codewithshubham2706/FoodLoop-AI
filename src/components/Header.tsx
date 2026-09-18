@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { Menu, X, ArrowRight, CircleUserRound, ShieldCheck } from 'lucide-react'
+import { Menu, X, ArrowRight, CircleUserRound } from 'lucide-react'
 import { useAuth } from '../lib/auth-context'
+import { MEMBER_PANEL } from '../lib/roles'
+import ThemeToggle from './ThemeToggle'
 import './Header.css'
 
 const NAV = [
@@ -29,7 +31,7 @@ export default function Header() {
         Skip to content
       </a>
       <div className="container header-inner">
-        <Link to="/" className="brand" onClick={() => setOpen(false)}>
+        <Link to="/" className="brand">
           <img src="/brand/favicon.svg" alt="" width={34} height={34} />
           <span>
             FoodLoop <em>AI</em>
@@ -45,15 +47,16 @@ export default function Header() {
         </nav>
 
         <div className="header-cta">
+          <ThemeToggle />
           {user ? (
             <div className="auth-chip-wrap">
               <Link
-                to={user.role === 'admin' ? '/admin' : '/user'}
-                className={`auth-chip${user.role === 'admin' ? ' is-admin' : ''}`}
-                title={`Open your ${user.role === 'admin' ? 'admin' : 'user'} panel`}
+                to={MEMBER_PANEL}
+                className="auth-chip"
+                title="Open your member panel"
               >
-                {user.role === 'admin' ? <ShieldCheck size={15} aria-hidden /> : <CircleUserRound size={15} aria-hidden />}
-                {user.role === 'admin' ? 'Admin' : 'My panel'}
+                <CircleUserRound size={15} aria-hidden />
+                My panel
               </Link>
               <button type="button" className="auth-signout" onClick={signOut} aria-label="Sign out" title="Sign out">
                 <X size={13} aria-hidden />
@@ -88,13 +91,8 @@ export default function Header() {
           ))}
           {user ? (
             <>
-              <Link
-                to={user.role === 'admin' ? '/admin' : '/user'}
-                className={`auth-chip${user.role === 'admin' ? ' is-admin' : ''}`}
-                onClick={() => setOpen(false)}
-              >
-                {user.role === 'admin' ? <ShieldCheck size={15} aria-hidden /> : <CircleUserRound size={15} aria-hidden />}
-                {user.role === 'admin' ? 'Admin panel' : 'My panel'}
+              <Link to={MEMBER_PANEL} className="auth-chip" onClick={() => setOpen(false)}>
+                <CircleUserRound size={15} aria-hidden /> My panel
               </Link>
               <button
                 type="button"

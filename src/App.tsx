@@ -11,12 +11,13 @@ import Esg from './pages/Esg'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
 import Login from './pages/Login'
+import Register from './pages/Register'
 import UserPanel from './pages/UserPanel'
-import Admin from './pages/Admin'
+import StaffConsole from './pages/StaffConsole'
 import NotFound from './pages/NotFound'
 
-// NOTE: the single <BrowserRouter> lives in components/RouterBase.tsx (it
-// owns the deploy basename). App renders routes only.
+// NOTE: the single <BrowserRouter> (with the deploy basename) lives in
+// components/RouterBase.tsx. App renders routes only.
 export default function App() {
   return (
     <ConsentProvider>
@@ -31,20 +32,22 @@ export default function App() {
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/login" element={<Login />} />
-            {/* Role-based panels */}
+            <Route path="/register" element={<Register />} />
+            {/* Member panel (mess / ngo / vendor) */}
             <Route
               path="/user"
               element={
-                <RequireRole role="user">
+                <RequireRole role="member">
                   <UserPanel />
                 </RequireRole>
               }
             />
+            {/* Staff console — internal tool, not linked from public nav */}
             <Route
-              path="/admin"
+              path="/staff-console"
               element={
-                <RequireRole role="admin">
-                  <Admin />
+                <RequireRole role="staff">
+                  <StaffConsole />
                 </RequireRole>
               }
             />

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
+import { Link } from 'react-router-dom'
 import { Send, Loader2, CircleCheck, CircleAlert, MessageCircle } from 'lucide-react'
 import './WaitlistForm.css'
 
@@ -208,8 +209,9 @@ export default function WaitlistForm() {
         <p className="wl-feedback success" role="status">
           <CircleCheck size={16} aria-hidden />{' '}
           {waOptIn
-            ? "You're on the list! Once approved, one email arrives with your WhatsApp channel invite."
-            : "You're on the list! We'll reach out with pilot details by email."}
+            ? "You're on the list! Once staff approve you, one email arrives with your WhatsApp channel invite."
+            : "You're on the list! We'll reach out with pilot details by email."}{' '}
+          Want full panel access now? <Link to="/register">Register your organisation →</Link>
         </p>
       )}
       {status === 'error' && serverMsg && (

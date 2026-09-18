@@ -181,8 +181,8 @@ tbody tr:hover td {
 }
 
 .st-delivered {
-  background: var(--brand-800);
-  color: #fff;
+  background: var(--brand-deep);
+  color: var(--btn-primary-ink);
   border-color: transparent;
 }
 

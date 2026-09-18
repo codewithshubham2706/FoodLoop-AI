@@ -140,7 +140,7 @@
 }
 
 .section-alt {
-  background: #fff;
+  background: var(--surface);
 }
 
 .engine-grid {
@@ -261,7 +261,7 @@
 
 /* Impact band */
 .impact-band {
-  background: var(--brand-800);
+  background: var(--brand-deep);
   color: var(--on-dark-soft);
   padding: 72px 0;
 }

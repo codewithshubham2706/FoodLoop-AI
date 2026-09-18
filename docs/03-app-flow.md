@@ -42,9 +42,10 @@ surplus_detected → quality_check → alert_generated → matched
 | `/esg` | ESG dashboard | Quarterly impact, frameworks | 0.6 |
 | `/privacy` | Privacy policy | Legal | 0.3 |
 | `/terms` | Terms | Legal | 0.3 |
-| `/login` | Demo sign-in | Choose panel (user/admin) — OIDC in production | — |
-| `/user` | **User panel** | Registration status, WhatsApp invite, onboarding checklist | — |
-| `/admin` | **Admin panel** | Approvals; approve ⇒ one email w/ channel invite | — |
+| `/login` | Demo sign-in | Role chooser (staff / mess / ngo / vendor) — OIDC in production | — |
+| `/register` | Registration | Full org info + WhatsApp opt-in; feeds the staff review queue | — |
+| `/user` | **Member panel** | Status timeline, org profile, WhatsApp invite, onboarding checklist | — |
+| `/staff-console` | **Staff console (backend-owned)** | Review queue; approve ⇒ one email w/ channel invite | — |
 | `*` | 404 | Catch-all (also static `404.html`) | — |
 
 ## 3. Key journeys
@@ -63,7 +64,7 @@ registration status timeline (submitted → admin review → approval email), th
 channel invite card ("view the email you received" or join directly), and an onboarding
 checklist. Guarded by `RequireRole role="user"`.
 
-**Admin panel (`/admin`)** — for FoodLoop staff: KPI tiles, filterable registration list,
+**Staff console (`/staff-console`)** — for FoodLoop staff (in production this is a separate backend-owned console, not part of the public app): KPI tiles, filterable registration list,
 approve/reject actions; approving records the decision and previews the single WhatsApp-invite
 email. Guarded by `RequireRole role="admin"`. Wrong-role visits redirect to their own panel.
 

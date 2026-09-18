@@ -1,0 +1,245 @@
+.reg-form,
+.reg-success {
+  display: grid;
+  gap: 18px;
+}
+
+.reg-form fieldset {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px 18px 16px;
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.reg-form legend {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reg-step-num {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.reg-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.reg-grid .field {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.reg-grid label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.reg-grid input,
+.reg-grid select {
+  font-family: inherit;
+  font-size: 14.5px;
+  color: var(--ink);
+  background: var(--surface-alt);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 13px;
+  width: 100%;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.reg-grid input::placeholder {
+  color: var(--ink-faint);
+  opacity: 0.75;
+}
+
+.reg-grid input:focus,
+.reg-grid select:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--surface);
+}
+
+.reg-grid input[aria-invalid='true'],
+.reg-grid select[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+
+.reg-field-error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--danger);
+  margin: 0;
+}
+
+/* Honeypot: real fields, invisible to humans */
+.reg-hp {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* WhatsApp opt-in */
+.reg-wa-optin {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-alt);
+  cursor: pointer;
+}
+
+.reg-wa-optin input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.reg-wa-optin-box {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  border: 1.5px solid var(--border);
+  transition: all 0.15s ease;
+}
+
+.reg-wa-optin input:checked ~ .reg-wa-optin-box {
+  background: var(--accent);
+  color: var(--btn-primary-ink);
+  border-color: var(--accent);
+}
+
+.reg-wa-optin input:focus-visible ~ .reg-wa-optin-box {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.reg-wa-optin-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.reg-wa-optin-text strong {
+  color: var(--ink);
+}
+
+/* Consent */
+.reg-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  cursor: pointer;
+}
+
+.reg-consent input {
+  margin-top: 3px;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+}
+
+.reg-consent a {
+  font-weight: 700;
+}
+
+.reg-submit {
+  justify-self: start;
+  min-width: 220px;
+}
+
+.reg-pipeline-note {
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  margin: 0;
+}
+
+.reg-server-msg {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--warn);
+  background: var(--warn-bg);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin: 0;
+}
+
+/* Success state */
+.reg-success {
+  text-align: center;
+  align-items: center;
+  justify-items: center;
+  padding: 34px 26px;
+  background: var(--accent-soft);
+  border: 1.5px solid var(--accent);
+  border-radius: var(--radius-lg);
+  color: var(--ink-soft);
+}
+
+.reg-success svg {
+  color: var(--ok);
+}
+
+.reg-success h3 {
+  font-size: 20px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.reg-success p {
+  max-width: 460px;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.reg-success-hint {
+  font-size: 13px !important;
+  color: var(--ink-faint) !important;
+}
+
+@media (max-width: 640px) {
+  .reg-grid {
+    grid-template-columns: 1fr;
+  }
+  .reg-submit {
+    width: 100%;
+  }
+}

@@ -7,92 +7,123 @@ import {
   MailCheck,
   CircleAlert,
   ListChecks,
+  Building2,
+  MapPin,
+  Phone,
+  Mail,
 } from 'lucide-react'
-import { WAITLIST_DEMO, DEFAULT_WAITLIST_ENTRY, APPROVAL_EMAIL } from '../data/demo'
-import { getStatusOverrides } from '../lib/waitlist-store'
+import { REGISTRATIONS_DEMO, DEFAULT_REGISTRATION } from '../data/demo-registrations'
+import { APPROVAL_EMAIL } from '../data/demo'
+import { getStatusFor } from '../lib/registrations'
 import { useAuth } from '../lib/auth-context'
+import { ROLE_LABELS } from '../lib/roles'
 import { useSeo } from '../lib/seo'
 import ApprovalEmailModal from '../components/ApprovalEmailModal'
 import Reveal from '../components/Reveal'
 import './UserPanel.css'
 
 const CHECKLIST = [
-  { label: 'Connect 4 weeks of mess/POS data', done: false },
+  { label: 'Connect 4 weeks of mess / operations data', done: false },
   { label: 'Name a pilot coordinator', done: false },
   { label: 'Join the WhatsApp broadcast channel', done: true },
-  { label: 'Schedule cold-chain sensor walkthrough (optional)', done: false },
+  { label: 'Schedule cold-chain walkthrough (optional)', done: false },
 ]
 
+const PROFILE_LABELS: Record<string, string> = {
+  daily_meals: 'Meals per day',
+  kitchen_type: 'Kitchen type',
+  beneficiary_count: 'People served',
+  beneficiary_type: 'Beneficiary type',
+  pickup_capability: 'Pickup capability',
+  category: 'Category',
+  dispatch_capability: 'Dispatch capability',
+  surplus_freq: 'Surplus frequency',
+  servings_typical: 'Typical surplus',
+  storage: 'Cold storage',
+}
+
 export default function UserPanel() {
-  const { user } = useAuth()
+  const { user, signOut } = useAuth()
   const [showEmail, setShowEmail] = useState(false)
 
   useSeo({
-    title: 'My pilot — member panel',
-    description: 'Your FoodLoop AI pilot registration status, WhatsApp channel invite and onboarding checklist.',
+    title: 'My panel — pilot member',
+    description: 'Your FoodLoop AI pilot registration, approval status, WhatsApp channel invite and onboarding checklist.',
     path: '/user',
     index: false,
   })
 
   const reg = useMemo(() => {
-    const base = WAITLIST_DEMO.find((e) => e.id === user?.waitlistId) ?? DEFAULT_WAITLIST_ENTRY
-    const override = getStatusOverrides()[base.id]
-    if (override && base.status === 'pending') {
-      return { ...base, status: override, approved_at: new Date().toISOString().slice(0, 16).replace('T', ' ') }
-    }
-    return base
+    const base = REGISTRATIONS_DEMO.find((r) => r.id === user?.regId) ?? DEFAULT_REGISTRATION
+    const status = getStatusFor(base)
+    return { base, status }
   }, [user])
 
-  const steps =
-    reg.status === 'approved'
-      ? 2
-      : reg.status === 'rejected'
-        ? 0
-        : 1
+  const step = reg.status.status === 'approved' ? 2 : reg.status.status === 'rejected' ? 0 : 1
+
+  // Full org profile = submitted form data (demo shows it for the signed-in member).
+  const profileEntries = Object.entries(reg.base.profile).filter(([, v]) => Boolean(v))
 
   return (
     <div className="page-pad container">
       <header className="page-head">
         <div>
-          <span className="eyebrow">User panel · {user?.org}</span>
+          <span className="eyebrow">Member panel · {ROLE_LABELS[reg.base.role]}</span>
           <h1>Welcome, {user?.name.split(' ')[0]}</h1>
           <p className="page-sub">
-            Your pilot registration <strong>{reg.id}</strong> — status, WhatsApp channel and next
-            steps in one place.
+            Registration <strong>{reg.base.id}</strong> — your status, organisation profile,
+            WhatsApp channel and next steps in one place.
           </p>
         </div>
-        <Link to="/dashboard" className="btn btn-ghost">
-          Open live demo
-        </Link>
+        <div className="user-head-actions">
+          <Link to="/dashboard" className="btn btn-ghost">
+            Live demo
+          </Link>
+          <button type="button" className="btn btn-ghost" onClick={signOut}>
+            Sign out
+          </button>
+        </div>
       </header>
 
-      {/* Registration status timeline */}
+      {/* ── Registration status timeline ───────────────────────── */}
       <Reveal className="card user-status-card">
         <div className="user-status-head">
           <h2>Registration status</h2>
-          <span className={`admin-status ${reg.status}`}>
-            {reg.status === 'pending' ? 'Pending review' : reg.status === 'approved' ? 'Approved · invite sent' : 'Rejected'}
+          <span className={`admin-status ${reg.status.status}`}>
+            {reg.status.status === 'pending'
+              ? 'Pending staff review'
+              : reg.status.status === 'approved'
+                ? 'Approved · invite sent'
+                : 'Rejected'}
           </span>
         </div>
-        <ol className="user-steps" aria-label="Registration progress">
-          <li className={steps >= 1 ? 'done' : ''}>
-            <CircleCheck size={18} aria-hidden /> Registration submitted
+
+        <ol className="user-steps">
+          <li className={step >= 1 ? 'done' : ''}>
+            {step >= 1 ? <CircleCheck size={18} aria-hidden /> : <Clock size={18} aria-hidden />}
+            Registration submitted — {reg.base.created_at}
           </li>
-          <li className={steps >= 2 ? 'done' : reg.status === 'rejected' ? 'failed' : ''}>
-            {reg.status === 'rejected' ? <CircleAlert size={18} aria-hidden /> : steps >= 2 ? <CircleCheck size={18} aria-hidden /> : <Clock size={18} aria-hidden />}
-            {reg.status === 'rejected' ? 'Rejected by admin' : 'Admin review'}
+          <li className={step >= 2 ? 'done' : reg.status.status === 'rejected' ? 'failed' : ''}>
+            {reg.status.status === 'rejected' ? (
+              <CircleAlert size={18} aria-hidden />
+            ) : step >= 2 ? (
+              <CircleCheck size={18} aria-hidden />
+            ) : (
+              <Clock size={18} aria-hidden />
+            )}
+            Staff review {reg.status.status === 'rejected' ? '— rejected' : '— usually within one working day'}
           </li>
-          <li className={steps >= 2 ? 'done' : ''}>
-            {steps >= 2 ? <MailCheck size={18} aria-hidden /> : <Clock size={18} aria-hidden />}
-            Approval email + WhatsApp invite
+          <li className={step >= 2 ? 'done' : ''}>
+            {step >= 2 ? <MailCheck size={18} aria-hidden /> : <Clock size={18} aria-hidden />}
+            Approval email {reg.base.whatsapp_opt_in ? '+ WhatsApp channel invite' : ''} — sent to {reg.base.email}
           </li>
         </ol>
 
-        {reg.status === 'approved' && (
+        {reg.status.status === 'approved' && (
           <div className="user-approved-box">
             <p>
-              Approved {reg.approved_at ? `on ${reg.approved_at}` : ''} — your invite email went out
-              to <strong>{reg.email}</strong>.
+              Approved on <strong>{reg.status.at}</strong> — the invite email went out to{' '}
+              <strong>{reg.base.email}</strong>.
             </p>
             <div className="user-approved-actions">
               <button type="button" className="btn btn-primary" onClick={() => setShowEmail(true)}>
@@ -104,27 +135,68 @@ export default function UserPanel() {
             </div>
           </div>
         )}
-        {reg.status === 'pending' && (
-          <p className="user-wait-note">
-            An admin reviews new registrations before the WhatsApp invite email goes out. You&rsquo;ll
-            hear back within one working day.
+        {reg.status.status === 'rejected' && (
+          <p className="user-rejected-note">
+            {reg.base.notes ?? 'Your registration was not approved in this phase.'} Questions? Email{' '}
+            <a href="mailto:hello@foodloop.ai">hello@foodloop.ai</a>.
           </p>
         )}
       </Reveal>
 
-      {/* WhatsApp channel card */}
-      <Reveal delay={80} className="card user-channel-card">
+      {/* ── Full organisation profile ──────────────────────────── */}
+      <Reveal delay={70} className="card user-profile-card">
+        <h2>
+          <Building2 size={19} aria-hidden /> Organisation profile
+        </h2>
+        <dl className="user-profile-grid">
+          <div>
+            <dt>
+              <Building2 size={13} aria-hidden /> Organisation
+            </dt>
+            <dd>
+              {reg.base.org} — {ROLE_LABELS[reg.base.role]}
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <MapPin size={13} aria-hidden /> City
+            </dt>
+            <dd>{reg.base.city}</dd>
+          </div>
+          <div>
+            <dt>
+              <Mail size={13} aria-hidden /> Email
+            </dt>
+            <dd>{reg.base.email}</dd>
+          </div>
+          <div>
+            <dt>
+              <Phone size={13} aria-hidden /> Phone
+            </dt>
+            <dd>{reg.base.phone}</dd>
+          </div>
+          {profileEntries.map(([k, v]) => (
+            <div key={k}>
+              <dt>{PROFILE_LABELS[k] ?? k.replace(/_/g, ' ')}</dt>
+              <dd>{v}</dd>
+            </div>
+          ))}
+        </dl>
+      </Reveal>
+
+      {/* ── WhatsApp channel card ──────────────────────────────── */}
+      <Reveal delay={130} className="card user-channel-card">
         <span className="user-channel-icon" aria-hidden>
           <MessageCircle size={22} />
         </span>
         <div className="user-channel-body">
           <h2>{APPROVAL_EMAIL.channel_name}</h2>
           <p>
-            Surplus alerts, pilot onboarding and monthly impact digests — one broadcast channel,
-            {reg.whatsapp_opt_in ? ' you opted in during registration.' : ' you did not opt in during registration.'}
+            Surplus alerts, onboarding steps and monthly impact digests —{' '}
+            {reg.base.whatsapp_opt_in ? 'you opted in during registration.' : 'you chose email-only updates.'}
           </p>
         </div>
-        {reg.status === 'approved' ? (
+        {reg.status.status === 'approved' ? (
           <button type="button" className="btn btn-primary" onClick={() => setShowEmail(true)}>
             <MailCheck size={15} aria-hidden /> Open invite email
           </button>
@@ -133,8 +205,8 @@ export default function UserPanel() {
         )}
       </Reveal>
 
-      {/* Onboarding checklist */}
-      <Reveal delay={140} className="card user-checklist-card">
+      {/* ── Onboarding checklist ───────────────────────────────── */}
+      <Reveal delay={190} className="card user-checklist-card">
         <h2>
           <ListChecks size={19} aria-hidden /> Onboarding checklist
         </h2>
@@ -150,7 +222,7 @@ export default function UserPanel() {
       </Reveal>
 
       {showEmail && (
-        <ApprovalEmailModal name={reg.name} email={reg.email} refId={reg.id} onClose={() => setShowEmail(false)} />
+        <ApprovalEmailModal name={reg.base.name} email={reg.base.email} refId={reg.base.id} onClose={() => setShowEmail(false)} />
       )}
     </div>
   )

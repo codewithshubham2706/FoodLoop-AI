@@ -2,7 +2,7 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--header-bg);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
 }
@@ -11,8 +11,8 @@
   position: absolute;
   left: 16px;
   top: -48px;
-  background: var(--brand-800);
-  color: #fff;
+  background: var(--brand-deep);
+  color: var(--btn-primary-ink);
   padding: 10px 16px;
   border-radius: 0 0 10px 10px;
   font-weight: 700;
@@ -111,17 +111,17 @@
 }
 
 .auth-chip:hover {
-  background: #c3ecda;
+  background: var(--accent-soft);
 }
 
 .auth-chip.is-admin {
-  color: #a7f3d0;
-  background: var(--brand-800);
+  color: var(--btn-primary-ink);
+  background: var(--brand-deep);
   border-color: var(--brand-800);
 }
 
 .auth-chip.is-admin:hover {
-  background: var(--brand-700);
+  background: var(--brand-900);
 }
 
 .auth-signout {
@@ -197,7 +197,7 @@ html.js .brand img {
     gap: 4px;
     padding: 12px 20px 18px;
     border-top: 1px solid var(--border);
-    background: #fff;
+    background: var(--surface);
   }
   .mobile-nav a:not(.btn) {
     text-decoration: none;
@@ -229,4 +229,23 @@ html.js .brand img {
   html.js .mobile-nav > a:nth-child(5) {
     animation-delay: 180ms;
   }
+}
+
+/* Theme toggle (dark is default; light via data-theme='light') */
+.theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--ink-soft);
+  transition: border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--brand-500);
+  color: var(--accent-strong);
+  transform: rotate(15deg);
 }

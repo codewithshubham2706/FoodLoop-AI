@@ -43,7 +43,7 @@
 }
 
 .pipe-step.is-accent {
-  background: var(--brand-800);
+  background: var(--brand-deep);
   border-color: var(--brand-800);
 }
 
