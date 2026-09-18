@@ -1,11 +1,11 @@
-# FoodLoop AI — robots
+# FoodLoop AI — robots (deployed at codewithshubham2706.github.io/FoodLoop-AI/)
 User-agent: *
 Allow: /
 
 # No crawl-delay needed; host is static & CDN-cached.
 
-Disallow: /admin
-Disallow: /user
-Disallow: /login
+Disallow: /FoodLoop-AI/admin
+Disallow: /FoodLoop-AI/user
+Disallow: /FoodLoop-AI/login
 
-Sitemap: https://foodloop.ai/sitemap.xml
+Sitemap: https://codewithshubham2706.github.io/FoodLoop-AI/sitemap.xml

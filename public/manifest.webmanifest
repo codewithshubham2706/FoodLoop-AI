@@ -2,18 +2,20 @@
   "name": "FoodLoop AI",
   "short_name": "FoodLoop",
   "description": "AI-powered closed-loop food surplus prediction, quality checking, NGO matching and route optimization.",
-  "start_url": "/",
+  "id": "/FoodLoop-AI/",
+  "start_url": "/FoodLoop-AI/",
+  "scope": "/FoodLoop-AI/",
   "display": "standalone",
   "background_color": "#0b3d2e",
   "theme_color": "#0b3d2e",
   "icons": [
     {
-      "src": "/apple-touch-icon.png",
+      "src": "/FoodLoop-AI/apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png"
     },
     {
-      "src": "/favicon-48.png",
+      "src": "/FoodLoop-AI/favicon-48.png",
       "sizes": "48x48",
       "type": "image/png"
     }

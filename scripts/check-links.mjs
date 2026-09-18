@@ -18,6 +18,10 @@ const srcDir = path.join(root, 'src')
 const ROUTES = ['/', '/dashboard', '/trace', '/rewards', '/esg', '/privacy', '/terms', '/login', '/user', '/admin']
 // Private / noindex panels: valid routes but deliberately absent from sitemap.xml
 const PRIVATE_ROUTES = new Set(['/login', '/user', '/admin'])
+// Deploy origin for sitemap/robots checks (keep in sync with scripts/site-url.mjs).
+const SITE_URL = 'https://codewithshubham2706.github.io'
+const BASE_PATH = '/FoodLoop-AI'
+
 const issues = []
 
 function walk(dir, files = []) {
@@ -88,23 +92,32 @@ for (const m of indexHtml.matchAll(/(?:href|content)=["'](\/[^"']+)["']/g)) {
   }
 }
 
-// 4. Sitemap covers the public routes (private panels must stay OUT)
+// 4. Sitemap covers the public routes (private panels must stay OUT).
+//    URLs must use the deployed origin + base path.
 const sitemap = readFileSync(path.join(root, 'public', 'sitemap.xml'), 'utf8')
 for (const r of ROUTES) {
   if (PRIVATE_ROUTES.has(r)) continue
-  if (!sitemap.includes(`<loc>https://foodloop.ai${r === '/' ? '/' : r}</loc>`)) {
-    issues.push(`sitemap.xml: missing route ${r}`)
+  const loc = `${SITE_URL}${BASE_PATH}${r === '/' ? '/' : r}`
+  if (!sitemap.includes(`<loc>${loc}</loc>`)) {
+    issues.push(`sitemap.xml: missing route ${r} (expected <loc>${loc}</loc>)`)
   }
 }
 for (const r of PRIVATE_ROUTES) {
-  if (sitemap.includes(`<loc>https://foodloop.ai${r}</loc>`)) {
+  if (sitemap.includes(`<loc>${SITE_URL}${BASE_PATH}${r}</loc>`)) {
     issues.push(`sitemap.xml: private route ${r} must not be listed`)
   }
 }
 
-// robots points at sitemap
+// robots points at the deployed sitemap and disallows the private panels
 const robots = readFileSync(path.join(root, 'public', 'robots.txt'), 'utf8')
-if (!/Sitemap:\s*\S+\/sitemap\.xml/.test(robots)) issues.push('robots.txt: missing Sitemap directive')
+if (!new RegExp(`Sitemap:\\s*${(SITE_URL + BASE_PATH).replace(/\./g, '\\.')}\\/sitemap\\.xml`).test(robots)) {
+  issues.push('robots.txt: missing Sitemap directive')
+}
+for (const r of PRIVATE_ROUTES) {
+  if (!robots.includes(`Disallow: ${BASE_PATH}${r}`)) {
+    issues.push(`robots.txt: missing Disallow for ${r}`)
+  }
+}
 
 if (issues.length) {
   console.error('\n✗ Link/asset audit failed:\n')

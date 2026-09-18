@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>404 — Page not found | FoodLoop AI</title>
     <meta name="robots" content="noindex" />
-    <link rel="icon" type="image/svg+xml" href="/brand/favicon.svg" />
+    <link id="favicon" rel="icon" type="image/svg+xml" href="/" />
     <style>
       * { box-sizing: border-box; margin: 0; padding: 0; }
       body {
@@ -57,5 +57,28 @@
       </p>
       <a class="btn" href="/">Back to FoodLoop AI</a>
     </main>
+    <script>
+      // GitHub Pages serves /404.html for ANY unmatched path, so compute the
+      // deploy root at runtime (works for root and /FoodLoop-AI/ deploys).
+      ;(function () {
+        var parts = location.pathname.split('/')
+        // '/FoodLoop-AI/foo/bar' → root '/FoodLoop-AI/' ; '/foo' → '/'
+        parts.pop()
+        var base = parts.join('/') + '/'
+        if (base === '//') base = '/'
+        document.getElementById('favicon').href = base + 'brand/favicon.svg'
+        document.querySelector('a.btn').href = base
+
+        // Standard GitHub Pages SPA handoff: remember the intended path so the
+        // SPA can render the right route (or its 404 UI) after the redirect.
+        try {
+          var seg = '/' + location.pathname.slice(base.length).replace(/^\/+/, '')
+          sessionStorage.setItem('fl-redirect', seg + location.search + location.hash)
+        } catch (e) {
+          /* storage unavailable — plain redirect is fine */
+        }
+        location.replace(base)
+      })()
+    </script>
   </body>
 </html>

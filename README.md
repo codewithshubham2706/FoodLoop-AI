@@ -8,7 +8,17 @@ FoodLoop AI shifts institutional kitchens from *reactive* ("waste → collect �
 closed loop: AI demand prediction, CV + IoT quality gates, automatic NGO matching, optimized
 routes, and an auditable impact ledger (meals served, CO₂e avoided).
 
-[![CI](https://github.com/codewithshubham2706/FoodLoop-AI/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/codewithshubham2706/FoodLoop-AI/actions/workflows/ci.yml) ![Node](https://img.shields.io/badge/Node-20%2B-0b3d2e) ![React](https://img.shields.io/badge/React-19-0b3d2e) ![TypeScript](https://img.shields.io/badge/TS-strict-0b3d2e) ![License](https://img.shields.io/badge/status-prototype-8a5a00)
+[![CI](https://github.com/codewithshubham2706/FoodLoop-AI/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/codewithshubham2706/FoodLoop-AI/actions/workflows/ci.yml) [![Live site](https://img.shields.io/badge/Live-codewithshubham2706.github.io%2FFoodLoop--AI-1b7a5c)](https://codewithshubham2706.github.io/FoodLoop-AI/) ![Node](https://img.shields.io/badge/Node-20%2B-0b3d2e) ![React](https://img.shields.io/badge/React-19-0b3d2e) ![TypeScript](https://img.shields.io/badge/TS-strict-0b3d2e) ![License](https://img.shields.io/badge/status-prototype-8a5a00)
+
+## Deployment
+
+Live on **GitHub Pages** (deployed automatically by CI on every push to `main`, after all gates pass):
+
+**https://codewithshubham2706.github.io/FoodLoop-AI/**
+
+The production build there is compiled with `VITE_BASE_PATH=/FoodLoop-AI/`, so all asset URLs,
+SPA routing, canonical/OG tags, the manifest and the QR code resolve under the repo subpath.
+No secrets are involved — see `.env.example` (every variable is public by design).
 
 ## Quick start
 

@@ -4,6 +4,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { ScanLine, CircleCheck, CircleAlert, QrCode, ArrowRight } from 'lucide-react'
 import { BATCHES, traceFor } from '../data/demo'
 import { useSeo } from '../lib/seo'
+import { assetUrl } from '../lib/env'
 import './Trace.css'
 
 export default function Trace() {
@@ -154,7 +155,7 @@ export default function Trace() {
           </div>
         </div>
         <img
-          src="/images/batch-qr.png"
+          src={assetUrl('/images/batch-qr.png')}
           alt="QR code linking to demo batch FL-2026-0042 trace page"
           width={148}
           height={148}

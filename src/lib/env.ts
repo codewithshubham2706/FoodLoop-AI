@@ -13,7 +13,16 @@ function read(name: string, fallback: string): string {
   return typeof raw === 'string' && raw.length > 0 ? raw : fallback
 }
 
-export const SITE_URL = read('VITE_SITE_URL', 'https://foodloop.ai').replace(/\/+$/, '')
+export const SITE_URL = read('VITE_SITE_URL', 'https://codewithshubham2706.github.io').replace(/\/+$/, '')
+
+/**
+ * Deploy base path (no trailing slash): '' locally, '/FoodLoop-AI' on GitHub
+ * Pages. Vite prefixes hashed assets with its own base; use this for any
+ * asset refs the app renders itself and for joining SITE_URL + route paths.
+ * Convention: SITE_URL never ends with '/', BASE_PATH is '' or '/xxx', and
+ * every route path starts with '/' — so `${SITE_URL}${BASE_PATH}${path}`.
+ */
+export const BASE_PATH = read('VITE_BASE_PATH', '').replace(/\/+$/, '')
 
 export const CONTACT_EMAIL = read('VITE_CONTACT_EMAIL', 'hello@foodloop.ai')
 
@@ -22,7 +31,13 @@ export const GA4_MEASUREMENT_ID = read('VITE_GA4_MEASUREMENT_ID', '')
 
 export const SITE_NAME = 'FoodLoop AI'
 
-/** Absolute URL helper for canonical/OG tags. */
+/** Absolute URL helper for canonical/OG tags (base-path aware). */
 export function absoluteUrl(pathname: string): string {
-  return `${SITE_URL}${pathname.startsWith('/') ? pathname : `/${pathname}`}`
+  const p = pathname.startsWith('/') ? pathname : `/${pathname}`
+  return `${SITE_URL}${BASE_PATH}${p}`
+}
+
+/** Root-relative path helper for image tags and assets the app renders itself. */
+export function assetUrl(path: string): string {
+  return `${BASE_PATH}${path.startsWith('/') ? path : `/${path}`}`
 }

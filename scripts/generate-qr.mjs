@@ -5,11 +5,11 @@
 import QRCode from 'qrcode'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { SITE_URL } from './site-url.mjs'
+import { SITE_URL, BASE_PATH } from './site-url.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 
-const demoUrl = `${SITE_URL}/trace?batch=FL-2026-0042`
+const demoUrl = `${SITE_URL}${BASE_PATH}/trace?batch=FL-2026-0042`
 
 await QRCode.toFile(path.join(root, 'public/images/batch-qr.png'), demoUrl, {
   width: 640,

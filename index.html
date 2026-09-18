@@ -14,7 +14,8 @@
     />
     <meta name="theme-color" content="#0b3d2e" />
     <meta name="color-scheme" content="light" />
-    <link rel="canonical" href="https://foodloop.ai/" />
+    <!-- Canonical/OG defaults; per-route values are synced by src/lib/seo.ts -->
+    <link rel="canonical" href="__FL_PUBLIC_BASE__" />
 
     <!-- Open Graph / social preview -->
     <meta property="og:type" content="website" />
@@ -24,8 +25,8 @@
       property="og:description"
       content="Five connected AI engines close the loop: demand prediction, surplus detection, CV + IoT quality checks, NGO matching and route optimization."
     />
-    <meta property="og:url" content="https://foodloop.ai/" />
-    <meta property="og:image" content="https://foodloop.ai/og-image.png" />
+    <meta property="og:url" content="__FL_PUBLIC_BASE__" />
+    <meta property="og:image" content="__FL_PUBLIC_BASE__og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="FoodLoop AI — closed-loop food redistribution platform" />
@@ -37,14 +38,14 @@
       name="twitter:description"
       content="Five connected AI engines close the loop: demand prediction, surplus detection, CV + IoT quality checks, NGO matching and route optimization."
     />
-    <meta name="twitter:image" content="https://foodloop.ai/og-image.png" />
+    <meta name="twitter:image" content="__FL_PUBLIC_BASE__og-image.png" />
     <meta name="twitter:image:alt" content="FoodLoop AI — closed-loop food redistribution platform" />
 
     <!-- Icons -->
-    <link rel="icon" type="image/svg+xml" href="/brand/favicon.svg" />
-    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="__FL_BASE__brand/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="48x48" href="__FL_BASE__favicon-48.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="__FL_BASE__apple-touch-icon.png" />
+    <link rel="manifest" href="__FL_BASE__manifest.webmanifest" />
 
     <!-- Fonts (preconnected + swap) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -60,8 +61,8 @@
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "FoodLoop AI",
-        "url": "https://foodloop.ai/",
-        "logo": "https://foodloop.ai/og-image.png",
+        "url": "__FL_PUBLIC_BASE__",
+        "logo": "__FL_PUBLIC_BASE__og-image.png",
         "description": "AI-powered closed-loop ecosystem that predicts food demand & surplus, detects quality deterioration via IoT + Computer Vision, matches safe surplus with nearby recipients and optimizes redistribution while measuring impact.",
         "contactPoint": {
           "@type": "ContactPoint",
